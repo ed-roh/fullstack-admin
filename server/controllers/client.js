@@ -6,20 +6,28 @@ import getCountryIso3 from "country-iso-2-to-3";
 
 export const getProducts = async (req, res) => {
   try {
-    const products = await Product.find();
-
-    const productsWithStats = await Promise.all(
-      products.map(async (product) => {
-        const stat = await ProductStat.find({
-          productId: product._id,
-        });
-        return {
-          ...product._doc,
-          stat,
-        };
-      })
-    );
-
+    const productsWithStats = await Product.aggregate([
+      {
+        $addFields: {
+          _id: {
+            $toString: "$_id",
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "productstats",
+          localField: "_id",
+          foreignField: "productId",
+          as: "stat",
+        },
+      },
+      {
+        $unwind: {
+          path: "$stat",
+        },
+      },
+    ]);
     res.status(200).json(productsWithStats);
   } catch (error) {
     res.status(404).json({ message: error.message });
