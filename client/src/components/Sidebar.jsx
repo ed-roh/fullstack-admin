@@ -121,13 +121,13 @@ const Sidebar = ({
             "& .MuiDrawer-paper": {
               color: theme.palette.secondary[200],
               backgroundColor: theme.palette.background.alt,
-              boxSixing: "border-box",
+              boxSizing: "border-box",
               borderWidth: isNonMobile ? 0 : "2px",
               width: drawerWidth,
             },
           }}
         >
-          <Box width="100%">
+          <Box width="100%" display="flex" flexDirection="column">
             <Box m="1.5rem 2rem 2rem 3rem">
               <FlexBetween color={theme.palette.secondary.main}>
                 <Box display="flex" alignItems="center" gap="0.5rem">
@@ -142,7 +142,7 @@ const Sidebar = ({
                 )}
               </FlexBetween>
             </Box>
-            <List>
+            <List sx={{ flex: 1, overflowY: "auto" }}>
               {navItems.map(({ text, icon }) => {
                 if (!icon) {
                   return (
@@ -191,42 +191,55 @@ const Sidebar = ({
                 );
               })}
             </List>
-          </Box>
-
-          <Box position="absolute" bottom="2rem">
-            <Divider />
-            <FlexBetween textTransform="none" gap="1rem" m="1.5rem 2rem 0 3rem">
-              <Box
-                component="img"
-                alt="profile"
-                src={profileImage}
-                height="40px"
-                width="40px"
-                borderRadius="50%"
-                sx={{ objectFit: "cover" }}
-              />
-              <Box textAlign="left">
-                <Typography
-                  fontWeight="bold"
-                  fontSize="0.9rem"
-                  sx={{ color: theme.palette.secondary[100] }}
-                >
-                  {user.name}
-                </Typography>
-                <Typography
-                  fontSize="0.8rem"
-                  sx={{ color: theme.palette.secondary[200] }}
-                >
-                  {user.occupation}
-                </Typography>
-              </Box>
-              <SettingsOutlined
-                sx={{
-                  color: theme.palette.secondary[300],
-                  fontSize: "25px ",
-                }}
-              />
-            </FlexBetween>
+            <Box
+              sx={{
+                position: "sticky",
+                bottom: 0,
+                zIndex: 1,
+                backgroundColor: theme.palette.background.alt,
+                mt: "auto",
+                py: "1rem",
+                borderTop: `1px solid ${theme.palette.primary[600]}`,
+              }}
+            >
+              <Divider />
+              <FlexBetween
+                textTransform="none"
+                gap="1rem"
+                m="1.5rem 2rem 0 3rem"
+              >
+                <Box
+                  component="img"
+                  alt="profile"
+                  src={profileImage}
+                  height="40px"
+                  width="40px"
+                  borderRadius="50%"
+                  sx={{ objectFit: "cover" }}
+                />
+                <Box textAlign="left">
+                  <Typography
+                    fontWeight="bold"
+                    fontSize="0.9rem"
+                    sx={{ color: theme.palette.secondary[100] }}
+                  >
+                    {user.name}
+                  </Typography>
+                  <Typography
+                    fontSize="0.8rem"
+                    sx={{ color: theme.palette.secondary[200] }}
+                  >
+                    {user.occupation}
+                  </Typography>
+                </Box>
+                <SettingsOutlined
+                  sx={{
+                    color: theme.palette.secondary[300],
+                    fontSize: "25px ",
+                  }}
+                />
+              </FlexBetween>
+            </Box>
           </Box>
         </Drawer>
       )}
