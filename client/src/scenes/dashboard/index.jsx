@@ -26,6 +26,7 @@ const Dashboard = () => {
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const { data, isLoading } = useGetDashboardQuery();
 
+
   const columns = [
     {
       field: "_id",
@@ -60,9 +61,12 @@ const Dashboard = () => {
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+        <Header title="DASHBOARD" subtitle="Seja bem vindo!" />
 
-        <Box>
+        {users}
+
+        <Box 
+        >
           <Button
             sx={{
               backgroundColor: theme.palette.secondary.light,
@@ -73,7 +77,7 @@ const Dashboard = () => {
             }}
           >
             <DownloadOutlined sx={{ mr: "10px" }} />
-            Download Reports
+            Baixar Planilha
           </Button>
         </Box>
       </FlexBetween>
